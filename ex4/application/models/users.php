@@ -11,7 +11,7 @@ class Users extends Model{
 	public function __construct(){
 		parent::__construct();
 
-		if(isset($_SESSION[$uID])){
+		if(isset($_SESSION['uID'])){
 			$userInfo = $this->getUserFromID($_SESSION['uID']);
 
 			$this->uID = $userInfo['uID'];
@@ -82,24 +82,16 @@ class Users extends Model{
 		$message = 'User added.';
 		return $message;
 	}
+	public function getUserFromEmail($email){
+		$sql = 'SELECT * FROM users WHERE email = ?';
+		$results = $this->db->getrow($sql, array($email));
 
-	//JENNIFER's addUser method
+		$user = $results;
 
-	public function addUser($data){
-		var_dump($data)
-		$uID = $_POST["post_uID"];
-		$email = $_POST["post_email"];
-		$password = $_POST['post_password'];
-		$fname = $_POST['post_fname'];
-		$lname = $_POST['post_lname'];
-
-		$sql="INSERT INTO users (email, password, first_name, last_name) VALUES (?,?)";
-		/* $sql="INSERT INTO users (email, password, first_name, last_name) VALUES ('".$email."','".$password."','".$fname."','".$lname."')"; */
-		$this->db->execute($sql,$data);
-		$message = 'User added.';
-		return $message;
-
+		return $user;
 	}
+
+
 	public function getUserFromID($uID){
 		$sql = 'SELECT * FROM users WHERE uID = ?';
 		$results = $this->db->getrow($sql, array($uID));
@@ -109,4 +101,16 @@ class Users extends Model{
 		return $user;
 	}
 
+public function checkUser($email, $password) {
+		$sql = "SELECT email, password FROM users WHERE email = ?";
+		$results = $this->db->getrow($sql, array($email));
+		$user = $results;
+		$password_db = $user[1];
+		if(password_verify($password,$password_db)) {
+				return true;
+		}
+		else {
+				return false;
+		}
+}
 }

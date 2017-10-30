@@ -6,13 +6,15 @@ class RegisterController extends Controller{
 
 	public function defaultTask(){
 		$userObject = new Users();
-		$this->set('task','add');
+    $this->set('task','add');
 	}
 
 	public function add(){
 		$this->userObject = new Users();
-		$data = array('first_name'=>$_POST['first_name'],'last_name'=>$_POST['last_name'],'email'=>$_POST['email'],'password'=>$_POST[PASSWORD_HASH('password',PASSWORD_DEFAULT)]);
-			
+		$hashword = password_hash($password,PASSWORD_DEFAULT);
+
+		$data = array('first_name'=>$_POST['first_name'],'last_name'=>$_POST['last_name'],'email'=>$_POST['email'],'password'=>$hashword);
+
 		$this->userObject->addUser($data);
 		$this->set('message', 'Thanks for registering!');
 	}
