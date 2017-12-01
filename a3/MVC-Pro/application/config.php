@@ -7,3 +7,4 @@ define('DB_HOST', 'localhost');
 define('DB_USER', 'tgraupne');
 define('DB_PASS', 'Applebloom1!');
 define('DB_NAME', 'tgraupne_db');
+?>

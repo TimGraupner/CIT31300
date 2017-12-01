@@ -1,6 +1,6 @@
 
 <?php include('elements/header.php');?>
-<?php
+<?php 
 if( is_array($post) ) {
 	extract($post);?>
 
@@ -26,7 +26,6 @@ if( is_array($post) ) {
 	<?php foreach($posts as $p){?>
     <h3><a href="<?php echo BASE_URL?>blog/view/<?php echo $p['pID'];?>" title="<?php echo $p['title'];?>"><?php echo $p['title'];?></a></h3>
 	<p><?php echo $p['content'];?></p>
-	<p><?php echo $p['date'];?></p>
 <?php }?>
 </div>
 
