@@ -18,6 +18,9 @@ if( is_array($post) ) {
 
     </div>
     <?php
+    if($u->isRegistered()) {
+    ?>
+    <?php
     if( is_array($comment) ) {
         extract($comment);
 
@@ -34,7 +37,9 @@ if( is_array($post) ) {
 
 
         </div>
-
+<?php } else{?>
+  <h2><a href="<?php echo BASE_URL?>login/">Login</a></h2>
+<?php } ?>
 
 
 <?php include('views/elements/footer.php');?>
