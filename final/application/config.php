@@ -4,9 +4,9 @@ define('BASE_URL', 'http://corsair.cs.iupui.edu:21881/final/');
 
 //database info
 define('DB_HOST', 'localhost');
-define('DB_USER', 'crdillon');
-define('DB_PASS', 'crdillon');
-define('DB_NAME', 'crdillon_db');
+define('DB_USER', 'tgraupne');
+define('DB_PASS', 'Applebloom1!');
+define('DB_NAME', 'tgraupne_db');
 
 define('REQFIELD', '<font color="#FF0000">*</font>');
 ?>
