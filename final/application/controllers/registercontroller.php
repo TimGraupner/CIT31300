@@ -1,26 +1,17 @@
 <?php
 
-class RegisterController extends Controller{
+class RegisterController extends Controller {
 	
-	protected $userObject;
-
-	public function index(){
-		$userObject = new Users();
-		$this->set('task','add');
+	public $user;
+	
+	public function addUser(){
+		
+			$this->user = new User();			
+			$data = array('first_name'=>$_POST['first_name'],'last_name'=>$_POST['last_name'],'email'=>$_POST['email'], 'password'=>password_hash($_POST['password'],PASSWORD_DEFAULT));
+			$result = $this->user->addUser($data);
+			$this->set('message', $result);
+		
 	}
 	
-	public function add(){
-		$this->userObject = new Users();
-
-        $password = $_POST['password'];
-        $passhash = password_hash($password,PASSWORD_DEFAULT);
-
-		$data = array('first_name'=>$_POST['first_name'],'last_name'=>$_POST['last_name'],'email'=>$_POST['email'],'password'=>$passhash);
-			
-		$this->userObject->addUser($data);
-		$this->set('message', 'Thanks for registering!');
-	}
 	
 }
-
-?>

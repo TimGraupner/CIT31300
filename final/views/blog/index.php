@@ -1,19 +1,24 @@
-
 <?php include('views/elements/header.php');?>
 
-    <div class="container">
-        <div class="page-header">
+<?php if( isset($posts) && is_array($posts) ) {?>
 
-            <h1><?php echo $title;?></h1>
-        </div>
+<div class="container">
+<div class="page-header">
 
-        <?php foreach($posts as $p){?>
-            <h3><a href="<?php echo BASE_URL?>blog/post/<?php echo $p['pID'];?>" title="<?php echo $p['title'];?>"><?php echo $p['title'];?></a></h3>
-            <sub><?php echo 'Posted on ' . $p[date] . ' by <a href="'.BASE_URL.'members/view/'. $p[uid]. '">' . $p[first_name] . ' ' . $p[last_name] . '</a> in <a href="'.BASE_URL.'category/view/'. $p[categoryid].'">' . $p[name] .'</a>' ?></sub>
-            <div style="margin-top:15px;"><a href="<?php echo BASE_URL?>ajax/get_post_content/?pID=<?php echo $p['pID'];?>" class="btn post-loader">View entire post</a></div>
+<h1><?php echo $title;?></h1>
+  </div>
 
-        <?php }?>
-    </div>
+	<?php foreach($posts as $p){?>
+	<h3><a href="<?php echo BASE_URL?>blog/post/<?php echo $p['pID'];?>" title="<?php echo $p['title'];?>"><?php echo $p['title'];?></a></h3>
+	<?php if($user->isAdmin()) { ?>
+		<p style="float: right;"><a href="<?php echo BASE_URL; ?>addpost/edit/<?php echo $p['pID']; ?>"><span style="text-decoration: underline">edit</span></a></p>
+	<?php } ?>
+	<h5><?php echo strval($p['last_name'].', '.$p['first_name']).' -- '. date('F d, Y',strtotime($p['date']));?></h5>
+	<div style="margin-top: 15px"><a href="<?php echo BASE_URL; ?>ajax/get_post_content/?pID=<?php echo $p['pID']; ?>" class="btn post-loader">View Entire Post</a></div>
+<?php }?>
+</div>
+
+<?php }?>
 
 
 <?php include('views/elements/footer.php');?>

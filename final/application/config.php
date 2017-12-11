@@ -9,4 +9,3 @@ define('DB_PASS', 'Applebloom1!');
 define('DB_NAME', 'tgraupne_db');
 
 define('REQFIELD', '<font color="#FF0000">*</font>');
-?>

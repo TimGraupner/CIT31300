@@ -1,50 +1,49 @@
 <?php
 
 class LoginController extends Controller{
+	
+	public $user;
+	
+	public function do_login() {
+		
+		$this->user = new User();			
 
-   protected $userObject;
-   
-   public function do_login() {
-	   // handle login
+		$data = array('email'=>$_POST['email'],'password'=>$_POST['password']);
 
-       $this->userObject = new Users();
+		$message = "Login Failed - Username/Email or Password Incorrect";
 
-       if($this->userObject->checkUser($_POST['email'],$_POST['password'])) {
+		if($this->user->checkUser($data)) {
+			$message = "Login Successful";
+			$_SESSION['uID'] = $this->user->getUserFromEmail($_POST['email']);
+		}
 
-           $userInfo = $this->userObject->getUserFromEmail($_POST['email']);
-
-           $_SESSION['uID'] = $userInfo['uID'];
-
-          if(strlen($_SESSION['redirect']) > 0 ) {
-              $view = $_SESSION['redirect'];
-              unset($_SESSION['redirect']);
-              header('Location: '.BASE_URL.$view);
-          }
-           else {
-               header('Location: '.BASE_URL);
-           }
-
-
-
-
-       }
-       else {
-           $this->set('error','Wrong password / email combination');
-       }
-
-   }
-
-    public function logout() {
-
-    //unset the session id
-        unset($_SESSION['uID']);
-
-    // close the session
-        session_write_close();
-
-    // send to the homepage
-        header('Location: '.BASE_URL);
-
-    }
+		$this->set('message', $message);
+		
+		if(strlen($_SESSION['redirect']) > 0) {
+			$view = $_SESSION['redirect'];
+			unset($_SESSION['redirect']);
+			header('Location: '.BASE_URL.$view.'/');
+		} else {
+			header('Location: '.BASE_URL);	
+		}
+	}
+	
+	public function logout() {
+		
+		unset($_SESSION['uID']);
+		
+		$this->set('message', 'Successfully Logged Out!');
+		
+		$_SESSION['message'] = 'Successfully Logged Out!';
+		
+		if(strlen($_SESSION['redirect']) > 0) {
+			$view = $_SESSION['redirect'];
+			unset($_SESSION['redirect']);
+			header('Location: '.BASE_URL.$view.'/');
+		} else {
+			header('Location: '.BASE_URL);	
+		}
+	}
+	
 	
 }
