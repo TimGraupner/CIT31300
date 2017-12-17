@@ -1,10 +1,10 @@
 <?php include('views/elements/header.php');?>
 
 <?php if( isset($posts) && is_array($posts) ) {?>
-
 <div class="container">
 	<div class="page-header">
-		<h1><?php echo $title;?></h1>
+		<h1><?php echo 'Category: '.$title;?></h1>
+		<a href="<?php echo BASE_URL.'blog/'; ?>"><button class="btn btn-default">Back to All Categories</button></a>
 	</div>
 
 	<?php foreach($posts as $p){?>
@@ -19,7 +19,7 @@
 			<?php echo $p['category']; ?>
 		</h5>
 	</a>
-	<div style="margin-top: 15px"><a href="<?php echo BASE_URL; ?>ajax/get_post_content/?pID=<?php echo $p['pID']; ?>" class="btn post-loader" style="background-color: #000000; color: #ffb3b3;">View Entire Post</a></div>
+	<div style="margin-top: 15px"><a href="<?php echo BASE_URL; ?>ajax/get_post_content/?pID=<?php echo $p['pID']; ?>" class="btn post-loader" style="background-color: #AD1D28; color: #FFF; font-family: 'Lobster',cursive;">View Entire Post</a></div>
 	</div>
 <?php }?>
 </div>

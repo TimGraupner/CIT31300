@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>MVC Pro</title>
+    <title>MVC</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -15,11 +15,11 @@
       }
     </style>
     <link href="<?php echo BASE_URL?>views/css/bootstrap-responsive.css" rel="stylesheet">
-	
+
 	<?php if($user->isAdmin()) { ?>
 		<link rel="stylesheet" href="<?php echo BASE_URL; ?>application/plugins/tinyeditor/tinyeditor.css">
 	<?php } ?>
-	
+
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -43,13 +43,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="<?php echo BASE_URL; ?>">MVC Pro</a>
+          <a class="brand" href="<?php echo BASE_URL; ?>">MVC</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"><a href="<?php echo BASE_URL; ?>">Home</a></li>
               <li><a href="<?php echo BASE_URL; ?>blog/">Blog</a></li>
               <li><a href="<?php echo BASE_URL; ?>members/">Members</a></li>
-              <li><a href="<?php echo BASE_URL; ?>weather/">Weather</a></li>
+
 			</ul>
 			<?php if(isset($_SESSION['uID'])) { ?>
 				<ul class="nav pull-right">
@@ -58,8 +58,11 @@
 							<?php echo $user->getUserName(); ?><b class="caret"></b>
 						</a>
 						<ul class="dropdown-menu" role="menu">
+							<li><a href="<?php echo BASE_URL; ?>members/profile/">My Profile</a></li>
 							<?php if($user->isAdmin()) { ?>
-								<li><a href="<?php echo BASE_URL; ?>manager/">Blog Manager</a></li>
+								<li><a href="<?php echo BASE_URL; ?>category/">Manage Categories</a></li>
+								<li><a href="<?php echo BASE_URL; ?>manager/">Manage Posts</a></li>
+								<li><a href="<?php echo BASE_URL; ?>hr/">Manage Users</a></li>
 							<?php } ?>
 							<li><a href="<?php echo BASE_URL; ?>login/logout/">Log Out</a></li>
 						</ul>
@@ -72,6 +75,7 @@
 				</ul>
 			<?php } ?>
 			<script src="<?php echo BASE_URL; ?>/views/js/jquery.js"></script>
+
 			<script>
 				$(document).ready(function() {
 					var navsObj = $('.nav li');

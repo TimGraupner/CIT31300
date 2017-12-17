@@ -3,36 +3,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="<?php echo BASE_URL?>views/js/jquery.js"></script>
     <script src="<?php echo BASE_URL?>views/js/bootstrap.min.js"></script>
-	
-<?php if($user->isAdmin()) { ?>
-    <script src="<?php echo BASE_URL?>application/plugins/tinyeditor/tiny.editor.packed.js"></script>
-    <script>
-			var editor = new TINY.editor.edit('editor', {
-				id: 'tinyeditor',
-				width: 584,
-				height: 175,
-				cssclass: 'tinyeditor',
-				controlclass: 'tinyeditor-control',
-				rowclass: 'tinyeditor-header',
-				dividerclass: 'tinyeditor-divider',
-				controls: ['bold', 'italic', 'underline', 'strikethrough', '|', 'subscript', 'superscript', '|',
-					'orderedlist', 'unorderedlist', '|', 'outdent', 'indent', '|', 'leftalign',
-					'centeralign', 'rightalign', 'blockjustify', '|', 'unformat', '|', 'undo', 'redo', 'n',
-					'font', 'size', 'style', '|', 'image', 'hr', 'link', 'unlink', '|'],
-				footer: true,
-				fonts: ['Verdana','Arial','Georgia','Trebuchet MS'],
-				xhtml: true,
-				cssfile: 'custom.css',
-				bodyid: 'editor',
-				footerclass: 'tinyeditor-footer',
-				toggle: {text: 'source', activetext: 'wysiwyg', cssclass: 'toggle'},
-				resize: {cssclass: 'resize'}
-			});
-			
 
-		</script>
-		
-<?php } ?>
 		<script>
 			$(document).ready(function() {
 				$('.edit').css('display','none');
@@ -125,8 +96,240 @@
 					$(el).parent().parent().parent().submit();				
 				});
 				
-			});
-			
+				$('.weather-sidebar').ready(function(){
+					$.ajax({
+						url:'<?php echo BASE_URL; ?>ajax/get_local_weather/',
+						method:'GET',
+						success:function(data) {
+							$('.weather-sidebar').html(data);
+						},
+					});
+				});
+				$('#first_name').on('change', function() {
+					if(this.value() == '') {
+						this.css('border','1px solid #F00');
+					} else {
+						this.css('border','0');
+					}
+				});					
+				$('#last_name').on('change', function() {
+					if(this.value() == '') {
+						this.css('border','1px solid #F00');
+					} else {
+						this.css('border','0');
+					}
+				});				
+				$('#email').on('change', function() {
+					if(this.value() == '') {
+						this.css('border','1px solid #F00');
+					} else {
+						this.css('border','0');
+					}
+				});				
+				$('#pwd').on('change', function() {
+					if(this.value() == '') {
+						this.css('border','1px solid #F00');
+					} else {
+						this.css('border','0');
+					}
+				});				
+				$('#conPwd').on('change', function() {
+					if(this.value() !== $('#pwd').value()) {
+						this.css('border','1px solid #F00');
+					} else if(this.value() == '') {
+						this.css('border','1px solid #F00');
+					} else {
+						this.css('border','1px solid #000');
+					}
+				});
+				$('#registration-submit').click(function(e){
+					e.preventDefault();
+					var form = $('#registration-form');
+					
+					var error = '';
+					
+					if($('#first_name').attr('value') !== '' &&
+						$('#last_name').attr('value') !== '' &&
+						$('#email').attr('value') !== '' &&
+						$('#pwd').attr('value') !== '' &&
+						$('#conPwd').attr('value') !== '' &&
+						$('#pwd').attr('value') == $('#conPwd').attr('value')
+					) {
+						form.submit();
+					} else {
+						if($('#first_name').attr('value') == '') {
+							error = error.concat("First name is empty.\n");
+							$('#first_name').css('border','1px solid #F00');
+						} else {
+							$('#first_name').css('border','0');
+						}
+						if($('#last_name').attr('value') == '') {
+							error = error.concat("Last name is empty.\n");
+							$('#last_name').css('border','1px solid #F00');
+						} else {
+							$('#last_name').css('border','0');
+						}
+						if($('#email').attr('value') == '') {
+							error = error.concat("Email is empty.\n");
+							$('#email').css('border','1px solid #F00');
+						} else {
+							$('#email').css('border','0');
+						}
+						if($('#pwd').attr('value') == '') {
+							error = error.concat("Password is empty.\n");
+							$('#pwd').css('border','1px solid #F00');
+						} else {
+							$('#pwd').css('border','0');
+						}
+						if($('#conPwd').attr('value') == '') {
+							error = error.concat("Confirm password is empty.\n");
+							$('#conPwd').css('border','1px solid #F00');
+						} else {
+							$('#conPwd').css('border','0');
+						}
+						if($('#conPwd').attr('value') !== $('#pwd').attr('value')) {
+							error = error.concat("Confirm password must match password.\n");
+							$('#pwd').css('border','1px solid #F00');
+							$('#conPwd').css('border','1px solid #F00');
+						}
+						alert(error);
+					}
+				});
+				$('#update-submit').click(function(e){
+					e.preventDefault();
+					var form = $('#update-form');
+					
+					var error = '';
+					
+					if($('#first_name').attr('value') !== '' &&
+						$('#last_name').attr('value') !== '' &&
+						$('#email').attr('value') !== '' &&
+						$('#pwd').attr('value') == $('#conPwd').attr('value')
+					) {
+						form.submit();
+					} else {
+						if($('#first_name').attr('value') == '') {
+							error = error.concat("First name is empty.\n");
+							$('#first_name').css('border','1px solid #F00');
+						} else {
+							$('#first_name').css('border','0');
+						}
+						if($('#last_name').attr('value') == '') {
+							error = error.concat("Last name is empty.\n");
+							$('#last_name').css('border','1px solid #F00');
+						} else {
+							$('#last_name').css('border','0');
+						}
+						if($('#email').attr('value') == '') {
+							error = error.concat("Email is empty.\n");
+							$('#email').css('border','1px solid #F00');
+						} else {
+							$('#email').css('border','0');
+						}
+						if($('#conPwd').attr('value') !== $('#pwd').attr('value')) {
+							error = error.concat("Confirm password must match password.\n");
+							$('#pwd').css('border','1px solid #F00');
+							$('#conPwd').css('border','1px solid #F00');
+						}
+						alert(error);
+					}
+				});
+				$('#title').on('change', function() {
+					if($(this).attr('value') == '') {
+						$(this).css('border','1px solid #F00');
+					} else {
+						$(this).css('border','0');
+					}
+				});		
+				$('#category').on('change', function() {
+					if($(this).attr('value') == '') {
+						$(this).css('border','1px solid #F00');
+					} else {
+						$(this).css('border','0');
+					}
+				});
+				$('#post-content').on('change', function() {
+					if($(this).text() == '') {
+						$(this).css('border','1px solid #F00');
+					} else {
+						$(this).css('border','0');
+					}
+				});
+				$('#add-submit').click(function(e){
+					e.preventDefault();
+					var form = $('#post-form');
+					
+					var title = $('#title').attr('value');
+					var category = $('#category').attr('value');
+					var text = $('#post-content').attr('value');
+					
+					var error = "The form is incomplete.\n";
+					
+					if(title !== '' &&
+						category !== '' &&
+						text !== ''
+					) {
+						form.submit();
+					} else {
+						if(title == '') {
+							error = error.concat("Title is empty.\n");
+							$('#title').css('border','1px solid #F00');
+						} else {
+							$('#title').css('border','0');
+						}
+						if(category == '') {
+							error = error.concat("Category is empty.\n");
+							$('#category').css('border','1px solid #F00');
+						} else {
+							$('#category').css('border','0');
+						}
+						if(text == '') {
+							error = error.concat("Content is empty.\n");
+							$('#post-content').css('border','1px solid #F00');
+						} else {
+							$('#post-content').css('border','0');
+						}
+						alert(error);
+					}
+				});
+				$('.approve-btn').click(function(e) {
+					e.preventDefault();
+					var btn = this;
+					var uID = $(this).attr('id').replace('-approve','');
+					
+					$.ajax({
+						url:'<?php echo BASE_URL; ?>hr/approve/'.concat(uID),
+						method:'POST',
+						success:function(data) {
+							$(btn).css('visibility','hidden');
+						}
+					});
+				});
+				$('.remove-btn').click(function(e) {
+					e.preventDefault();
+					
+					var btn = this;
+					var uID = $(this).attr('id').replace('-remove','');
+					
+					$.ajax({
+						url:'<?php echo BASE_URL; ?>hr/remove/'.concat(uID),
+						method:'POST',
+						success:function(data) {
+							var name = $('#'.concat(uID,'-name')).text();//.replace('-name','');
+							$('#'.concat(uID, '-row')).text(name.concat(' has been removed.'));
+							$('#'.concat(uID, '-row')).addClass('alert');
+							var index = 0;
+							var interval = setInterval(function(){
+								if(index == 5) {
+									clearInterval(interval);
+									$('#'.concat(uID, '-row')).remove();
+								}
+								index += 1;
+							}, 1000);
+						}
+					});
+				});
+			});			
 		</script>
   </body>
 </html>
